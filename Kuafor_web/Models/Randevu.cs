@@ -29,5 +29,7 @@ public partial class Randevu
 
     public bool? RandevuOnay { get; set; }
 
+    public int? Ucret { get; set; }
+
     public virtual Berber? Berber { get; set; }
 }

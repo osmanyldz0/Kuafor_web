@@ -25,6 +25,10 @@ public partial class Berber
 
     public string CalisilmayanGun { get; set; } = null!;
 
+    public int? BerberKazanc { get; set; }
+
+    public DateOnly? IsBaslangicTarihi { get; set; }
+
     public virtual ICollection<Hizmet> Hizmets { get; set; } = new List<Hizmet>();
 
     public virtual ICollection<Randevu> Randevus { get; set; } = new List<Randevu>();
