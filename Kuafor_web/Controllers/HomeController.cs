@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Text;
 using Kuafor_web.Models;
 
-namespace berber4.Controllers
+namespace Kuafor_web.Controllers
 {
     public class HomeController : Controller
     {

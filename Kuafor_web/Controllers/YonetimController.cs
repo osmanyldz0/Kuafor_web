@@ -7,7 +7,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Kuafor_web.Models;
 
-namespace berber4.Controllers
+namespace Kuafor_web.Controllers
 {
     [Authorize(Roles = "Yonetici")]
     public class YonetimController : Controller
