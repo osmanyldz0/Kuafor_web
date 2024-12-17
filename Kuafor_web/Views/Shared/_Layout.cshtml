@@ -3,33 +3,161 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Kuafor_web</title>
+    <title>@ViewData["Title"] - berber4</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Kuafor_web.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/berber4.styles.css" asp-append-version="true" />
+    <style>
+        button:focus {
+            outline: 0;
+        }
+
+        .navbar .dropdown-menu .form-control {
+            width: 200px;
+        }
+
+        /* Navbar arka planını siyah yapar */
+        .navbar {
+            background-color: black;
+        }
+
+            /* Navbar linklerinin rengini beyaz yapar */
+            .navbar .nav-link {
+                color: white;
+            }
+
+                /* Navbar linklerine hover efekti ekler */
+                .navbar .nav-link:hover {
+                    color: #f8f9fa;
+                }
+    </style>
+    <style>
+        /* Dropdown menüsünün arka plan rengini koyu yapar */
+        .dropdown-menu {
+            background-color: #343a40; /* Koyu gri */
+            color: white; /* Yazı rengi beyaz */
+        }
+
+            /* Dropdown menüdeki item hover durumunda arka planı daha açık koyu yapar */
+            .dropdown-menu .dropdown-item:hover {
+                background-color: #495057; /* Daha açık gri */
+                color: white; /* Yazı rengi beyaz */
+            }
+    </style>
+
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <!-- Navbar'ı siyah yapmak için navbar-dark bg-dark sınıflarını kullandık -->
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Kuafor_web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+
+                        @{
+
+                            BerberDbContext db = new BerberDbContext();
+                            var ustmenu = db.Menulers.Where(eleman => eleman.UstId == null && eleman.Silindi == false && eleman.Aktif == true).OrderBy(e => e.Sıra).ToList();
+                            var salonlar = db.Salons.ToList();
+                            foreach (var item in ustmenu)
+                            {
+                                var altmenu = db.Menulers.Where(eleman => eleman.UstId == item.MenuId && eleman.Silindi == false && eleman.Aktif == true).OrderBy(e => e.Sıra).ToList();
+
+                                if (altmenu.Count == 0)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="@item.Url">@item.Baslık</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item dropdown">
+                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            @item.Baslık
+                                        </a>
+                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            @foreach (var item2 in salonlar)
+                                            {
+                                                <li><a class="dropdown-item" href="/Home/Subeler">@item2.SalonAd </a></li>
+                                            }
+                                        </ul>
+                                    </li>
+                                }
+                            }
+                        }
+                    </ul>
+
+                    <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
+
+                        @{
+                            @using System.Security.Claims;
+
+
+                            try
+                            {
+                                int kulId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                                var kullanici = db.Kullanicis.Where(k => k.KullaniciId == kulId).FirstOrDefault();
+                                string kulAdi = kullanici.KullaniciIsim;
+                                <li>
+                                    <div class="form-group">
+                                        <small>
+                                            <span style="color: #e65100;">Hoşgeldin @kulAdi</span>
+                                            <a href="/Giris/CikisYap" class="btn btn-danger btn-block text-dark" onclick="return confirm('Çıkış yapılsın mı?')">Çıkış</a>
+
+                                        </small>
+
+                                    </div>
+
+                                </li>
+
+                            }
+
+                            catch//kulanıcı girisi yapılmamıs
+                            {
+                                <li class="nav-item dropdown order-1">
+                                    <button type="button" id="dropdownMenu1" data-bs-toggle="dropdown" class="btn btn-outline-secondary dropdown-toggle">Giriş <span class="caret"></span></button>
+                                    <ul class="dropdown-menu dropdown-menu-end mt-1">
+                                        <li class="p-3">
+                                            <form class="form" role="form" method="post" action="Giris/GirisYap">
+                                                <div class="form-group">
+                                                    <input id="Eposta" placeholder="E-posta" name="Eposta" class="form-control form-control-sm" type="E-posta" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <input id="Parola" placeholder="Parola" name="Parola" class="form-control form-control-sm" type="password" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" asp-action="GirisYap" asp-controller="Giris" class="btn btn-primary btn-block">Giriş</button>
+
+                                                </div>
+                                                <div class="form-group text-center">
+
+                                                    <small><a href="KullaniciEkle">Kaydol</a></small>
+                                                </div>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+
+                        }
+                        <!-- İşlemler Butonu -->
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <form action="/Islemler/Yonlendir" method="post">
+                                    <button type="submit" class="btn" asp-action="KullanicIslemleri" asp-controller="Home" style="background-color: #e65100; color: black;">Kullanıcı İşlemleri</button>
+                                </form>
+                            }
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -38,10 +166,11 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Kuafor_web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2024 - berber4 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap 5 Bundle (Bootstrap ve Popper.js) -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)

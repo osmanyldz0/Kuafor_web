@@ -7,7 +7,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Kuafor_web.Models;
 
-namespace Kuafor_web.Controllers
+namespace berber4.Controllers
 {
     [Authorize(Roles = "Yonetici")]
     public class YonetimController : Controller
@@ -92,6 +92,21 @@ namespace Kuafor_web.Controllers
         {
             return View();
         }
+
+
+
+
+
+
+
+        ///////
+
+
+
+
+
+
+
 
 
 
@@ -336,23 +351,31 @@ namespace Kuafor_web.Controllers
 
 
         public IActionResult KullaniciSil(int id)
-
         {
+            // Kullanıcının randevuları var mı kontrol et
+            var randevuKontrol = db.Randevus.Where(k => k.KullaniciId == id).ToList();
 
+            // Eğer randevu varsa, silinemez
+            if (randevuKontrol.Any())
+            {
+                ModelState.AddModelError("", "Kullanıcının randevusu bulunduğundan silinemez");
+
+
+                return RedirectToAction("Kullanicilar");
+            }
+
+            // Eğer randevu yoksa, kullanıcıyı sil
             var kullanici = db.Kullanicis.Where(s => s.Silindi == false && s.KullaniciId == id).FirstOrDefault();
-
-
-
-
-            kullanici.Silindi = true;
-            // sayfa.Aktif = false;
-
-
-            db.Kullanicis.Update(kullanici);
-            db.SaveChanges();
+            if (kullanici != null)
+            {
+                kullanici.Silindi = true; // Silindi bayrağını güncelle
+                db.Kullanicis.Update(kullanici);
+                db.SaveChanges();
+            }
 
             return RedirectToAction("Kullanicilar");
         }
+
 
 
         public IActionResult SalonSil(int id)
@@ -448,6 +471,4 @@ namespace Kuafor_web.Controllers
 
 
 }
-
-
 

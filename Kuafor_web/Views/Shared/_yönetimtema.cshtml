@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Paneli</title>
+    <style>
+        /* Genel Stil */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #1e1e1e;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 20px 10px;
+        }
+
+            .sidebar h3 {
+                color: #FF6600;
+                text-align: center;
+                font-size: 1.5em;
+                margin-bottom: 30px;
+            }
+
+            .sidebar a {
+                display: block;
+                color: #f1f1f1;
+                padding: 12px 20px;
+                text-decoration: none;
+                border-radius: 5px;
+                margin-bottom: 10px;
+                transition: background-color 0.3s ease, color 0.3s ease;
+                font-weight: 500;
+            }
+
+                .sidebar a:hover {
+                    background-color: #FF6600;
+                    color: #121212;
+                }
+
+                .sidebar a.active {
+                    background-color: #FF6600;
+                    color: #121212;
+                }
+
+        /* Ana İçerik */
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+            .content h1 {
+                color: #FF6600;
+                font-size: 2em;
+                margin-bottom: 20px;
+            }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #ddd;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div>
+            <h3>Admin Paneli</h3>
+            <a asp-controller="Home" asp-action="AnaSayfa" class="active">Anasayfa</a>
+            <a asp-controller="Yonetim" asp-action="SalonGoster">Salonlar</a>
+            <a asp-controller="Yonetim" asp-action="RandevuOnay">Randevular</a>
+            <a asp-controller="Yonetim" asp-action="Kullanicilar">Tüm Kullanıcılar</a>
+            <a asp-controller="Yonetim" asp-action="BerberGoster">Berberler</a>
+        </div>
+        <div>
+            <a asp-controller="Account" asp-action="Logout" style="color: #FF6666; font-weight: bold;">Çıkış Yap</a>
+        </div>
+    </div>
+
+    <!-- Ana İçerik Alanı -->
+    <div class="content">
+        @RenderBody()
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Admin Paneli. Tüm hakları saklıdır.</p>
+    </div>
+</body>
+</html>

@@ -7,9 +7,9 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
 using System.Text;
-using Kuafor_web.Models;
+ 
 
-namespace Kuafor_web.Controllers
+namespace berber4.Controllers
 {
     public class HomeController : Controller
     {
@@ -56,7 +56,12 @@ namespace Kuafor_web.Controllers
             return View();
         }
 
+        public IActionResult Subeler()
+        {
 
+
+            return View();
+        }
 
         public IActionResult Iletisim()
         {
