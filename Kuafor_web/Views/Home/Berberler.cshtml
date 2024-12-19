@@ -1,0 +1,37 @@
+﻿ @model List<berber4.Models.Berber>
+
+@{
+    ViewData["Title"] = "Aktif Berberler";
+      <!-- Sayfa başlığı -->
+}
+
+<h4>Aktif Berberler</h4>
+<hr />
+
+<!-- Berberlerin listeleneceği tablo -->
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Berber Adı</th>
+                    <th>Durum</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var berber in Model)
+                {
+                    <tr>
+                        <td>@berber.BerberIsim</td>
+                        <td>@(berber.Aktif == true ? "Aktif" : "Pasif")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Geri dönmek için bir link -->
+<div>
+    <a asp-action="Index">Ana Sayfaya Dön</a>
+</div>

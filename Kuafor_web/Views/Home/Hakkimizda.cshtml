@@ -1,0 +1,180 @@
+﻿@{
+    ViewBag.Title = "Hakkımızda";
+    BerberDbContext db = new BerberDbContext();
+    var berberler = db.Berbers.Where(s => s.Pasif == false).ToList();
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 50px 15px;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            color: #ff6600; /* Turuncu */
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .about-content {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #f1f1f1;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+            .about-content h3 {
+                font-size: 1.5em;
+                color: #ff6600; /* Turuncu */
+                margin-top: 20px;
+            }
+
+        .team-member {
+            display: inline-block;
+            margin: 20px;
+            text-align: center;
+            width: 220px;
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+            .team-member:hover {
+                transform: translateY(-10px);
+            }
+
+            .team-member img {
+                width: 100%;
+                height: auto;
+                border-radius: 50%;
+                border: 5px solid #ff6600;
+                margin-bottom: 15px;
+            }
+
+            .team-member h4 {
+                font-size: 1.4em;
+                color: #ff6600;
+            }
+
+            .team-member p {
+                font-size: 1.1em;
+                color: #ddd;
+            }
+
+        .mission {
+            background-color: #2c2c2c;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+            .mission h3 {
+                color: #ff6600;
+                font-size: 2em;
+                margin-bottom: 20px;
+            }
+
+            .mission ul {
+                list-style: none;
+                padding: 0;
+            }
+
+                .mission ul li {
+                    font-size: 1.2em;
+                    margin-bottom: 10px;
+                    color: #f1f1f1;
+                }
+
+        .footer {
+            background-color: #121212;
+            padding: 20px;
+            text-align: center;
+            color: #ddd;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="section-title">Hakkımızda</h1>
+
+        <div class="about-content">
+            <p>Kuaför Salonumuz, güzellik ve bakım alanında yılların deneyimiyle hizmet vermektedir. Müşterilerimizin her ihtiyacına cevap verebilmek için en kaliteli ürünleri kullanıyor ve profesyonel ekip arkadaşlarımızla hizmetinizdeyiz.</p>
+
+            <h3>Vizyonumuz</h3>
+            <p>Her müşterimizin kendisini özel hissetmesi için kişiselleştirilmiş hizmetler sunmayı hedefliyoruz. Sadece dış güzelliğinizi değil, ruhsal rahatlamanızı da önemsiyoruz.</p>
+
+            <h3>Misyonumuz</h3>
+            <p>Salonumuz, yenilikçi yaklaşımlarla güzellik dünyasında fark yaratmayı ve her zaman müşteri memnuniyetini ön planda tutmayı amaçlar. Amacımız, sektördeki en iyi kuaför salonlarından biri olmaktır.</p>
+        </div>
+
+        <h2 class="section-title">EKİBİMİZ</h2>
+        <div class="row text-center">
+            @foreach (var (berber, index) in berberler.Select((value, i) => (value, i)))
+            {
+                <!-- Her iki berber'ı 2'li gruplarda düzenliyoruz -->
+                @if (index % 2 == 0)
+                {
+                    <div class="col-md-6 col-sm-12">
+                        <div class="team-member">
+                            <h4>@berber.BerberIsim</h4>
+                            <h12>Hizmet verilen Salon:</h12>
+                            <h6>@berber.SalonAd</h6>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6 col-sm-12">
+                        <div class="team-member">
+                            <h4>@berber.BerberIsim</h4>
+                            <h12>Hizmet verilen Salon:</h12>
+                            <h6>@berber.SalonAd</h6>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>
+
+
+
+
+            <div class="mission">
+                <h3>Hizmetlerimiz</h3>
+                <ul>
+                    <li>Saç Kesimi </li>
+                    <li>Saç Bakımı</li>
+                    <li>Cilt Bakımı</li>
+                    <li>Sakal Kesim Ve Tasarımı</li>
+                    
+                </ul>
+            </div>
+            </div>
+
+            <div class="footer">
+                <p>&copy; 2024 Kuaför Salonumuz | Tüm Hakları Saklıdır</p>
+            </div>
+        </body>
+        </html>

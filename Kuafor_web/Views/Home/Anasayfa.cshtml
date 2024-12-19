@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = "Berber Ana Sayfa";
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title</title>
+     
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 50px 15px;
+        }
+
+        /* Başlık */
+        .section-title {
+            font-size: 2.5em;
+            color: #FF6600; /* Koyu Turuncu */
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Slider */
+        .slider {
+            position: relative;
+            background-color: #000;
+            height: 400px;
+            margin-bottom: 50px;
+        }
+
+            .slider img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0.8;
+            }
+
+            .slider .caption {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #fff;
+                font-size: 2.5em;
+                font-weight: 600;
+                text-align: center;
+            }
+
+        /* Hizmetler */
+        .services-section {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 50px;
+        }
+
+        .service {
+            background-color: #1e1e1e;
+            padding: 20px;
+            width: 30%;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+            .service:hover {
+                transform: translateY(-10px);
+            }
+
+            .service i {
+                font-size: 3em;
+                color: #FF6600;
+                margin-bottom: 15px;
+            }
+
+            .service h4 {
+                font-size: 1.5em;
+                color: #f1f1f1;
+                margin-bottom: 15px;
+            }
+
+            .service p {
+                font-size: 1.1em;
+                color: #ddd;
+            }
+
+        /* İletişim Butonu */
+        .contact-button {
+            display: inline-block;
+            background-color: #FF6600;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+            .contact-button:hover {
+                background-color: #e65c00;
+            }
+
+        /* Footer */
+        .footer {
+            background-color: #121212;
+            padding: 20px;
+            text-align: center;
+            color: #ddd;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- Slider -->
+        <div class="slider">
+            <img src="~/images/imgs.jpeg" alt="Slider Image" />
+            <div class="caption">Kaliteli Kuaför Hizmetleri</div>
+        </div>
+
+        <!-- Hizmetler -->
+        <div class="section-title">HİZMETLERİMİZ</div>
+        <div class="services-section">
+            <div class="service">
+                <i class="fa fa-cut"></i>
+                <h4>Saç Kesimi</h4>
+                <p>Profesyonel saç kesim hizmeti ile istediğiniz stili elde edin.</p>
+            </div>
+            <div class="service">
+                <i class="fa fa-paint-brush"></i>
+                <h4>Sakal Kesim Ve Tasarımı</h4>
+                <p>Sakalınızı alanında profesyonel kuaförlerimiz ile şekillendirin.</p>
+            </div>
+            <div class="service">
+                <i class="fa fa-magic"></i>
+                <h4>Saç Ve Cilt Bakımı </h4>
+                <p>Saç ve cilt bakımında rahatlatıcı ve gözle görülür etki.</p>
+            </div>
+        </div>
+
+        <!-- İletişim Butonu -->
+        <div class="section-title">BİZİMLE İLETİŞİME GEÇİN</div>
+        <a href="@Url.Action("Iletisim", "Home")" class="contact-button">İletişim Sayfasına Git</a>
+
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 Berber Salonu | Tüm Hakları Saklıdır</p>
+    </div>
+
+ 
+     
+</body>
+</html>
