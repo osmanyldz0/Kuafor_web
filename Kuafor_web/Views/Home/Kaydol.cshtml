@@ -1,12 +1,11 @@
 ﻿@model Kuafor_web.Models.Kullanici
 
 @{
-    ViewData["Title"] = "Bilgilerim";
-    Layout = "~/Views/Shared/User.cshtml";
+    ViewData["Title"] = "Kaydol";
+    // Layout = "~/Views/Shared/_yönetimtema.cshtml";
 }
 
 <style>
-
     /* Sayfa arka planını siyah yap */
     body {
         background-color: #121212; /* Siyah arka plan */
@@ -63,18 +62,15 @@
     .text-danger {
         color: red;
     }
-
 </style>
-<h4>Bilgilerim</h4>
-<hr />
 
+<h4>Kaydol</h4>
+<hr />
 <div class="row">
     <div class="col-md-12">
         <div class="form-container">
-            <form asp-action="BilgilerimiGuncelle">
+            <form asp-action="Kaydol">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="KullaniciId" />
-
                 <!-- Kullanıcı Adı Alanı -->
                 <div class="form-group">
                     <label asp-for="KullaniciIsim" class="control-label"></label>
@@ -96,30 +92,22 @@
                     <span asp-validation-for="Telefon" class="text-danger"></span>
                 </div>
 
-                <!-- Parola Alanı (Değiştirilmeyecekse boş bırakılabilir) -->
+                <!-- Parola Alanı -->
                 <div class="form-group">
-                    <label asp-for="Parola" class="control-label">Parola (*Değiştirilmeyecekse boş bırakın)</label>
+                    <label asp-for="Parola" class="control-label"></label>
                     <input asp-for="Parola" class="form-control" />
                     <span asp-validation-for="Parola" class="text-danger"></span>
                 </div>
-
-
-
-                <!-- Güncelle Butonu -->
+ 
+                <!-- Kaydol Butonu -->
                 <div class="form-group">
-                    <input type="submit" value="Güncelle" class="btn btn-primary" />
+                    <input type="submit" value="Kaydol" class="btn btn-primary" />
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<!-- Geri Dönüş Bağlantısı -->
 <div>
-    <a asp-action="Index">Geri</a>
+    <a asp-action="AnaSayfa" class="btn btn-secondary">Geri</a>
 </div>
-
-
-
-
-

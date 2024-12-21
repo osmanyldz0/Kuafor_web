@@ -1,0 +1,100 @@
+﻿@model IEnumerable<Kuafor_web.Models.Randevu>
+
+@{
+    ViewData["Title"] = "Randevularım";
+}
+
+<!-- Sayfa Arka Plan ve Tablonun Şekillendirilmesi -->
+<style>
+    /* Sayfa arka planı */
+    body {
+        background-color: #121212; /* Siyah arka plan */
+        color: #ffffff; /* Beyaz genel metin */
+        font-family: Arial, sans-serif;
+    }
+
+    /* Tablo ayarları */
+    table {
+        width: 100%;
+        margin: 20px auto;
+        background-color: #1e1e1e; /* Koyu gri tablo arka planı */
+        border-collapse: collapse;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Gölge efekti */
+    }
+
+        /* Tablo başlıkları */
+        table th {
+            background-color: #FF6600; /* Turuncu başlık arka planı */
+            color: #121212; /* Siyah yazı rengi */
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Tablo satırları */
+        table td {
+            color: #FFFFFF; /* Beyaz metin */
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #444; /* İnce gri kenarlık */
+        }
+
+        /* Linkler */
+        table a {
+            color: #FF6600; /* Turuncu link */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            table a:hover {
+                color: #e65c00; /* Daha koyu turuncu hover efekti */
+                text-decoration: underline;
+            }
+
+        /* Tablo satırlarının hover efekti */
+        table tr:hover {
+            background-color: #333333; /* Koyu gri hover efekti */
+        }
+</style>
+
+<!-- Sayfa İçeriği -->
+<h1>Randevularım</h1>
+<p style="color: red;">Randevularınız yönetici tarafından onaylandığında burada görünecektir.</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.RandevuTarih)</th>
+            <th>@Html.DisplayNameFor(model => model.RandevuSaat)</th>
+            <th>@Html.DisplayNameFor(model => model.Hizmetler)</th>
+            <th>@Html.DisplayNameFor(model => model.RandevuBitis)</th>
+            <th>@Html.DisplayNameFor(model => model.HizmetSuresi)</th>
+            <th>@Html.DisplayNameFor(model => model.BerberAd)</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.RandevuTarih)</td>
+                <td>@Html.DisplayFor(modelItem => item.RandevuSaat)</td>
+                <td>@Html.DisplayFor(modelItem => item.Hizmetler)</td>
+                <td>@Html.DisplayFor(modelItem => item.RandevuBitis)</td>
+                <td>@Html.DisplayFor(modelItem => item.HizmetSuresi)</td>
+                <td>@Html.DisplayFor(modelItem => item.BerberAd)</td>
+                <td>
+                    <a asp-action="RandevuGetir" asp-route-id="@item.RandevuId"
+                       onclick="return confirm('!!!RANDEVU DÜZENLEYE BASIP YENİ RANDEVU OLUŞTURMAZSANIZ RANDEVUNUZ İPTAL OLUR YİNE DE DÜZENLEMEK İSTİYOR MUSUNUZ')">
+                        Düzenle
+                    </a>
+                    |
+                    <a asp-action="RandevuSil" asp-route-id="@item.RandevuId"
+                       onclick="return confirm('Randevu silinsin mi ?')">
+                        Randevu Sil
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

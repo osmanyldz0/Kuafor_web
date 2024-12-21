@@ -1,0 +1,118 @@
+﻿@model Kuafor_web.Models.Kullanici
+
+@{
+    ViewData["Title"] = "Kaydol";
+}
+
+<style>
+    body {
+        background-color: #121212; /* Siyah arka plan */
+        color: #fff; /* Yazı rengini beyaz yap */
+        font-family: Arial, sans-serif;
+    }
+
+    .form-container {
+        background-color: #D3D3D3; /* Formun arka planını beyaz yap */
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 500px;
+        margin: 50px auto;
+    }
+
+        .form-container label {
+            color: #121212;
+            font-weight: bold;
+        }
+
+        .form-container input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f7f7f7;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+            .form-container input[type="submit"] {
+                background-color: #FF6600;
+                color: white;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+                padding: 10px 20px;
+            }
+
+                .form-container input[type="submit"]:hover {
+                    background-color: #e65c00;
+                }
+
+    .text-danger {
+        color: red;
+    }
+</style>
+
+<main class="my-form">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">Kaydol</div>
+                    <div class="card-body">
+                        <form asp-action="Kaydol">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                            <!-- Kullanıcı Adı -->
+                            <div class="form-group row">
+                                <label asp-for="KullaniciIsim" class="col-md-4 col-form-label text-md-right">Adınız</label>
+                                <div class="col-md-6">
+                                    <input asp-for="KullaniciIsim" id="KullaniciIsim" class="form-control" placeholder="Adınızı girin" />
+                                    <span asp-validation-for="KullaniciIsim" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- E-Posta -->
+                            <div class="form-group row">
+                                <label asp-for="Eposta" class="col-md-4 col-form-label text-md-right">E-Posta</label>
+                                <div class="col-md-6">
+                                    <input asp-for="Eposta" id="Eposta" class="form-control" placeholder="E-postanızı girin" />
+                                    <span asp-validation-for="Eposta" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Telefon -->
+                            <div class="form-group row">
+                                <label asp-for="Telefon" class="col-md-4 col-form-label text-md-right">Telefon</label>
+                                <div class="col-md-6">
+                                    <input asp-for="Telefon" id="Telefon" class="form-control" placeholder="Telefon numaranızı girin" />
+                                    <span asp-validation-for="Telefon" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Parola -->
+                            <div class="form-group row">
+                                <label asp-for="Parola" class="col-md-4 col-form-label text-md-right">Parola</label>
+                                <div class="col-md-6">
+                                    <input asp-for="Parola" id="Parola" class="form-control" placeholder="Parolanızı girin" />
+                                    <span asp-validation-for="Parola" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <!-- Submit Butonu -->
+                            <div class="form-group row">
+                                <div class="col-md-6 offset-md-4">
+                                    <input type="submit" value="Kaydol" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div>
+    <a asp-action="AnaSayfa" class="btn btn-secondary" style="color: #1e90ff;">Geri</a>
+</div>
