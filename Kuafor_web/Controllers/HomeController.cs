@@ -7,7 +7,8 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Authorization;
 using System.Text;
- 
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace berber4.Controllers
 {
@@ -35,6 +36,117 @@ namespace berber4.Controllers
         //    var mevcutRandevular=db.Randevus.Where(r =>r.RandevuTarih==yeniRandevu.RandevuTarih && ).Fir
         //}
 
+     //   private readonly string _apiKey = "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";
+        private static readonly string ApiKey = "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"; // API anahtarýnýzý buraya ekleyin
+        private static readonly string ApiEndpoint = "https://api.groq.com/openai/v1/chat/completions"; // API endpoint adresi
+
+
+
+
+
+
+
+
+        public async Task<IActionResult> Tavsiye(IFormFile photo)
+        {
+
+
+
+            if (photo != null && photo.Length > 0)
+            {
+                // string apiKey = _apiKey; // API anahtarýnýz burada
+              
+                string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
+
+
+
+                // Fotoðrafý Base64 formatýna çevirin
+                string base64Image;
+                using (var memoryStream = new MemoryStream())
+                {
+                    await photo.CopyToAsync(memoryStream);
+                    byte[] byteArray = memoryStream.ToArray();
+                    base64Image = Convert.ToBase64String(byteArray);
+                }
+
+                // JSON Mesajý Oluþturma
+                var messagePayload = new
+                {
+                    model = "llama-3.2-11b-vision-preview",
+                    messages = new[]
+                    {
+                        new
+                        {
+                            role = "user",
+                            content = new object[]
+                            {
+                                new { type = "text", text = "Can you give me some suggestions about hair style and hair color for the person in this photo? " },
+                                new
+                                {
+                                    type = "image_url",
+                                    image_url = new { url = $"data:image/jpeg;base64,{base64Image}" }
+                                }
+                            }
+                        }
+                    }
+                };
+
+                using (var client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiKey}");
+
+                    var jsonPayload = JsonConvert.SerializeObject(messagePayload);
+                    var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+
+                    HttpResponseMessage response = await client.PostAsync(ApiEndpoint, content);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = await response.Content.ReadAsStringAsync();
+                        var jsonResponse = JObject.Parse(responseContent);
+                        var message = jsonResponse["choices"]?[0]?["message"]?["content"]?.ToString();
+
+                        // Yanýtý ViewBag'e ata
+                        //ViewBag.ResponseMessage = message;
+                        ViewBag.EditedImageUrl = message;
+                        return View();
+                    }
+                    ViewBag.EditedImageUrl = "API isteði baþarýsýz";
+
+                    return View();
+                }
+
+                // API'ye istek gönderme
+            }
+
+            else
+            {
+                ViewBag.Error = " fotoðraf yükleyiniz .";
+            }
+
+            return View();
+        }
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public IActionResult Privacy()
         {
@@ -47,6 +159,29 @@ namespace berber4.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public IActionResult Kaydol() //httpget
+
+        {
+
+
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Kaydol(Kullanici k) //httpget
+
+        {
+            k.Silindi = false;
+            k.Aktif = true;
+            k.Yetki = false;
+            k.Parola = MD5Sifrele(k.Parola.Trim());
+            db.Kullanicis.Add(k);
+
+            db.SaveChanges();
+
+
+            return Redirect("/Giris/GirisYap");
+        }
 
 
         public IActionResult Hakkimizda()
@@ -156,44 +291,44 @@ namespace berber4.Controllers
             {
                 r.HizmetSuresi = new TimeOnly(0, 40); // 00:40
                 r.Ucret = 300;
-                berber.BerberKazanc += 300;
+                berber.Berberkazanc += 300;
             }
             else if (r.Hizmetler == "Sakal")
             {
                 r.HizmetSuresi = new TimeOnly(0, 20); // 00:20
                 r.Ucret = 150;
-                berber.BerberKazanc += 150;
+                berber.Berberkazanc += 150;
             }
             else if (r.Hizmetler == "Bakým")
             {
                 r.HizmetSuresi = new TimeOnly(0, 20); // 00:20
                 r.Ucret = 200;
-                berber.BerberKazanc += 200;
+                berber.Berberkazanc += 200;
             }
             else if (r.Hizmetler == "Saç ve Sakal")
             {
                 r.HizmetSuresi = new TimeOnly(1, 0); // 01:00
                 r.Ucret = 450;
-                berber.BerberKazanc += 450;
+                berber.Berberkazanc += 450;
             }
             else if (r.Hizmetler == "Saç ve Bakým")
             {
                 r.HizmetSuresi = new TimeOnly(1, 5); // 01:05
                 r.Ucret = 500;
-                berber.BerberKazanc += 500;
+                berber.Berberkazanc += 500;
 
             }
             else if (r.Hizmetler == "Sakal ve Bakým")
             {
                 r.HizmetSuresi = new TimeOnly(0, 45); // 00:45
                 r.Ucret = 350;
-                berber.BerberKazanc += 350;
+                berber.Berberkazanc += 350;
             }
             else if (r.Hizmetler == "Saç, Sakal ve Bakým")
             {
                 r.HizmetSuresi = new TimeOnly(1, 25); // 01:25
                 r.Ucret = 600;
-                berber.BerberKazanc += 600;
+                berber.Berberkazanc += 600;
             }
 
             // Hizmet süresini TimeSpan'e çevir
@@ -222,15 +357,15 @@ namespace berber4.Controllers
                 }
             }
 
-
+            
 
             // Berberin çalýþma saatleri kontrolü
             if (r.RandevuSaat < berber.IsBaslangicSaati || r.RandevuSaat >= berber.IsBitisSaati)
             {
                 string calismaSaatleri = $"{berber.IsBaslangicSaati:HH:mm} - {berber.IsBitisSaati:HH:mm}";
 
-
-                ModelState.AddModelError("", $"Seçtiðiniz berberin çalýþma saatleri {calismaSaatleri} arasýndadýr. Lütfen belirtilen saatler arasýnda bir zaman dilimi seçiniz.");
+               
+                ModelState.AddModelError("", $"Seçtiðiniz berberin çalýþma saatleri {calismaSaatleri} arasýndadýr. Lütfen belirtilen saatler arasýnda bir zaman dilimi seçiniz." );
                 return View("Randevu");
             }
 
@@ -403,8 +538,8 @@ namespace berber4.Controllers
         public IActionResult RandevuGoster(int id)
         {
             var kullaniciId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var Randevu = db.Randevus.Where(r => r.KullaniciId == kullaniciId && r.RandevuOnay == true).ToList();
-            //  var kulllanici=   db.Kullanicis.Where(k => k.KullaniciId == kullaniciId).FirstOrDefault();
+            var Randevu = db.Randevus.Where(r => r.KullaniciId == kullaniciId&&r.RandevuOnay==true).ToList();
+          //  var kulllanici=   db.Kullanicis.Where(k => k.KullaniciId == kullaniciId).FirstOrDefault();
 
             return View(Randevu);
         }
@@ -414,11 +549,11 @@ namespace berber4.Controllers
         {
 
 
-
+            
             var randevu = db.Randevus.Where(s => s.RandevuId == r.RandevuId).FirstOrDefault();
             var berber = db.Berbers.Where(s => s.BerberId == r.BerberId).FirstOrDefault();
 
-            berber.BerberKazanc -= r.Ucret;
+            berber.Berberkazanc -= r.Ucret;
 
             randevu.RandevuId = r.RandevuId;
             randevu.Aktif = r.Aktif;
@@ -427,8 +562,8 @@ namespace berber4.Controllers
             randevu.KullaniciId = r.KullaniciId;
             randevu.RandevuSaat = r.RandevuSaat;
 
-
-            randevu.Hizmetler = r.Hizmetler;
+             
+            randevu.Hizmetler = r.Hizmetler; 
             randevu.RandevuTarih = r.RandevuTarih;
 
             randevu.RandevuBitis = r.RandevuBitis;
@@ -445,7 +580,7 @@ namespace berber4.Controllers
         }
         public IActionResult RandevuGetir(int id)
         {
-            var randevu = db.Randevus.Where(s => s.RandevuId == id).FirstOrDefault();
+            var randevu = db.Randevus.Where(s =>   s.RandevuId == id).FirstOrDefault();
 
 
             return RedirectToAction("RandevuGuncelle", randevu);
@@ -459,7 +594,7 @@ namespace berber4.Controllers
             var bulunanRandevu = db.Randevus.FirstOrDefault(m => m.RandevuId == id);
             var berber = db.Berbers.Where(s => s.BerberId == bulunanRandevu.BerberId).FirstOrDefault();
 
-            berber.BerberKazanc -= bulunanRandevu.Ucret;
+            berber.Berberkazanc -= bulunanRandevu.Ucret;
             db.Randevus.Remove(bulunanRandevu);
             db.SaveChanges(); // Deðiþiklikleri kaydet
 
@@ -538,9 +673,9 @@ namespace berber4.Controllers
 
             }
 
-
+            
         }
-
+        
     }
 
 
@@ -553,6 +688,6 @@ namespace berber4.Controllers
 
 
 
-
-
+       
+    
 }

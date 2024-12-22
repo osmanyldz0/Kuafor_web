@@ -1,0 +1,131 @@
+﻿@model Kuafor_web.Models.Berber
+
+@{
+    ViewData["Title"] = "BerberEkle";
+    Layout = "~/Views/Shared/_yönetimtema.cshtml";
+    BerberDbContext db = new BerberDbContext();
+    var salonlar = db.Salons.ToList();
+
+}
+
+
+
+<h4>Berber Ekle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="BerberEkle">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="BerberIsim" class="control-label"></label>
+                <input asp-for="BerberIsim" class="form-control" />
+                <span asp-validation-for="BerberIsim" class="text-danger"></span>
+            </div>
+          
+             
+            <div class="form-group">
+                <label asp-for="Aktif" class="form-label"></label>
+                <select asp-for="Aktif" class="form-control">
+                    <option value="true">Aktif</option>
+                    <option value="false">Pasif</option>
+                </select>
+                <span asp-validation-for="Aktif" class="text-danger"></span>
+            </div>
+                <div class="form-group">
+                    <label asp-for="IsBaslangicTarihi" class="form-label">İş Başlangıç Tarihi</label>
+                    <input asp-for="IsBaslangicTarihi" class="form-control" type="date" />
+                    <span asp-validation-for="IsBaslangicTarihi" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IsBitisSaati" class="form-label">İş Bitiş Saati</label>
+                    <input asp-for="IsBitisSaati" class="form-control" type="time" />
+                    <span asp-validation-for="IsBitisSaati" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IsBaslangicSaati" class="form-label">İş Bitiş Saati</label>
+                    <input asp-for="IsBaslangicSaati" class="form-control" type="time" />
+                    <span asp-validation-for="IsBaslangicSaati" class="text-danger"></span>
+                </div>
+
+
+
+              
+
+            <div class="form-group">
+                <label asp-for="SalonId" class="control-label">Salon Seçiniz</label>
+                <select asp-for="SalonId" class="form-control">
+                    <option value="">Salon seçiniz</option>
+
+                    @foreach (var salon in salonlar)
+                    {
+
+
+                        <option value="@salon.SalonId">@salon.SalonAd</option>
+
+
+
+                    }
+
+
+
+                </select>
+                <span asp-validation-for="SalonId" class="text-danger"></span>
+            </div>
+                <div class="form-group">
+                    <label asp-for="CalisilmayanGun" class="control-label">İzin günü Seçiniz</label>
+                    <select asp-for="CalisilmayanGun" class="form-control">
+                        <option value="">izin günü seçiniz</option>
+
+
+
+
+
+                        <option value="monday">Pazartesi</option>
+
+                        <option value="tuesday ">salı</option>
+                        <option value="wednesday">çarşamba</option>
+                        <option value="thursday">perşembe</option>
+                        <option value="friday">cuma</option>
+                        <option value="saturday">cumartesi</option>
+                        <option value="sunday"> pazar</option>
+
+
+
+
+
+
+                    </select>
+                <span asp-validation-for="CalisilmayanGun" class="text-danger"></span>
+
+                </div>
+            <div class="form-group">
+                <label asp-for="VerilenHizmetler" class="control-label">Berber Hizmetleri</label>
+                <select asp-for="VerilenHizmetler" class="form-control">
+                    <option value="">Berberin verebileceği hizmetler</option>
+
+                    <option value="Saç">Saç</option>
+                    <option value="Sakal">Saç</option>
+                    <option value="Bakım">Bakım</option>
+                            <option value="Saç,Sakal /Saç/Sakal">Saç ve Sakal</option>
+                            <option value="Saç,Bakım/Saç/Bakım">Saç ve Bakım</option>
+                            <option value="Sakal,Bakım/Sakal/Bakım">Sakal ve Bakım</option>
+                            <option value="Saç,Sakal,Bakım/Saç,Sakal/Saç,Bakım/Sakal,Bakım/Saç/Sakal/Bakım">Saç, Sakal ve Bakım</option>
+
+                </select>
+                        <span asp-validation-for="VerilenHizmetler" class="text-danger"></span>
+            </div>
+             
+            <div class="form-group">
+                <input type="submit" value="Berber ekle"   class="btn btn-primary" />
+            </div>
+        </form>
+
+
+          
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="BerberGoster">Geri</a>
+</div>

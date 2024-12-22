@@ -25,6 +25,8 @@ public partial class BerberDbContext : DbContext
 
     public virtual DbSet<Randevu> Randevus { get; set; }
 
+  
+
     public virtual DbSet<Salon> Salons { get; set; }
 
     public virtual DbSet<Sayfalar> Sayfalars { get; set; }
@@ -37,6 +39,7 @@ public partial class BerberDbContext : DbContext
     {
         modelBuilder.Entity<Berber>(entity =>
         {
+         
             entity.ToTable("Berber");
 
             entity.Property(e => e.BerberId).HasColumnName("Berber_Id");
@@ -44,12 +47,6 @@ public partial class BerberDbContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("Berber_Isim");
-            entity.Property(e => e.CalisilmayanGun)
-                .HasMaxLength(12)
-                .IsUnicode(false);
-            entity.Property(e => e.SalonAd)
-                .HasMaxLength(50)
-                .IsUnicode(false);
             entity.Property(e => e.VerilenHizmetler)
                 .HasMaxLength(100)
                 .IsUnicode(false);
@@ -120,9 +117,6 @@ public partial class BerberDbContext : DbContext
 
             entity.Property(e => e.RandevuId).HasColumnName("Randevu_Id");
             entity.Property(e => e.Aktif).HasColumnName("aktif");
-            entity.Property(e => e.BerberAd)
-                .HasMaxLength(30)
-                .IsUnicode(false);
             entity.Property(e => e.BerberId).HasColumnName("Berber_Id");
             entity.Property(e => e.Hizmetler)
                 .HasMaxLength(100)
@@ -136,10 +130,13 @@ public partial class BerberDbContext : DbContext
                 .HasConstraintName("FK_Randevu_Berber");
         });
 
+        
+
         modelBuilder.Entity<Salon>(entity =>
         {
             entity.ToTable("Salon");
 
+            entity.Property(e => e.SalonId).HasColumnName("SalonID");
             entity.Property(e => e.SalonAd)
                 .HasMaxLength(50)
                 .IsUnicode(false);

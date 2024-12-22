@@ -8,7 +8,7 @@ namespace Kuafor_web.Models
     {
         public string IzinGunu { get; set; }
         public int BerberId { get; set; }
-
+         
 
 
     }

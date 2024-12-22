@@ -1,0 +1,190 @@
+﻿@model Kuafor_web.Models.Berber
+
+@{
+    ViewData["Title"] = "BerberGuncelle";
+    Layout = "~/Views/Shared/_yönetimtema.cshtml";
+    
+ 
+ 
+    BerberDbContext db = new BerberDbContext();
+    var salonlar = db.Salons.ToList();
+
+    
+    var berberler = db.Berbers.ToList();
+
+ 
+}
+ 
+<style>
+    /* Sayfa arka planını siyah yap */
+    body {
+        background-color: #121212; /* Siyah arka plan */
+        color: #fff; /* Yazı rengini beyaz yap */
+        font-family: Arial, sans-serif;
+    }
+
+    /* Formu beyaz zeminle göster */
+    .form-container {
+        background-color: #D3D3D3; /* Formun arka planını beyaz yap */
+        padding: 30px;
+        border-radius: 8px; /* Yuvarlatılmış köşeler */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Hafif gölge ekle */
+        max-width: 500px; /* Maksimum genişlik */
+        margin: 50px auto; /* Sayfa ortasında yerleşim */
+    }
+
+    /* Form elemanlarını hizalama ve stil verme */
+    .form-container label,
+    .form-container input {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    /* Form etiketleri */
+    .form-container label {
+        color: #121212; /* Etiket yazı rengini siyah yap */
+        font-weight: bold;
+    }
+
+    /* Input alanları */
+    .form-container input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px; /* Yuvarlatılmış kenarlar */
+        background-color: #f7f7f7; /* Açık gri arka plan */
+        font-size: 16px;
+    }
+
+    /* Submit buton stili */
+    .form-container input[type="submit"] {
+        background-color: #FF6600; /* Turuncu renk */
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .form-container input[type="submit"]:hover {
+        background-color: #e65c00; /* Daha koyu turuncu hover efekti */
+    }
+
+    /* Hata mesajlarını stilize et */
+    .text-danger {
+        color: red;
+    }
+</style>
+
+<h4>Berber Güncelle</h4>
+<hr />
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-container">
+            <form asp-action="BerberGuncelle">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+             
+                <input type="hidden" asp-for="BerberId" />
+
+                <!-- Berber İsmi Alanı -->
+                <div class="form-group">
+                    <label asp-for="BerberIsim" class="control-label">Berber İsmi</label>
+                    <input asp-for="BerberIsim" class="form-control" />
+                    <span asp-validation-for="BerberIsim" class="text-danger"></span>
+                </div>
+
+                <!-- Aktif / Pasif Seçeneği -->
+                <div class="form-group">
+                    <label asp-for="Aktif" class="control-label">Durum</label>
+                    <select asp-for="Aktif" class="form-control">
+                        <option value="true">Aktif</option>
+                        <option value="false">Pasif</option>
+                    </select>
+                    <span asp-validation-for="Aktif" class="text-danger"></span>
+                </div>
+
+                <!-- Kazanç -->
+                <div class="form-group">
+                    <label asp-for="Berberkazanc" class="control-label">Kazanç</label>
+                    <input asp-for="Berberkazanc" class="form-control" />
+                    <span asp-validation-for="Berberkazanc" class="text-danger"></span>
+                </div>
+
+                <!-- İş Başlangıç Tarihi -->
+                <div class="form-group">
+                    <label asp-for="IsBaslangicTarihi" class="form-label">İş Başlangıç Tarihi</label>
+                    <input asp-for="IsBaslangicTarihi" class="form-control" type="date" />
+                    <span asp-validation-for="IsBaslangicTarihi" class="text-danger"></span>
+                </div>
+
+                <!-- İş Başlangıç Saati -->
+                <div class="form-group">
+                    <label asp-for="IsBaslangicSaati" class="form-label">İş Başlangıç Saati</label>
+                    <input asp-for="IsBaslangicSaati" class="form-control" type="time" />
+                    <span asp-validation-for="IsBaslangicSaati" class="text-danger"></span>
+                </div>
+
+                <!-- İş Bitiş Saati -->
+                <div class="form-group">
+                    <label asp-for="IsBitisSaati" class="form-label">İş Bitiş Saati</label>
+                    <input asp-for="IsBitisSaati" class="form-control" type="time" />
+                    <span asp-validation-for="IsBitisSaati" class="text-danger"></span>
+                </div>
+
+                <!-- Salon Seçimi -->
+                <div class="form-group">
+                    <label asp-for="SalonId" class="control-label">Salon Seçiniz</label>
+                    <select asp-for="SalonId" class="form-control">
+                        <option value="">Salon seçiniz</option>
+                        @foreach (var salon in salonlar)
+                        {
+                            <option value="@salon.SalonId">@salon.SalonAd</option>
+                        }
+                    </select>
+                    <span asp-validation-for="SalonId" class="text-danger"></span>
+                </div>
+
+                <!-- Çalışılmayan Gün Seçimi -->
+                <div class="form-group">
+                    <label asp-for="CalisilmayanGun" class="control-label">Çalışılmayan Gün</label>
+                    <select asp-for="CalisilmayanGun" class="form-control">
+                        <option value="">İzin günü seçiniz</option>
+                        <option value="monday">Pazartesi</option>
+                        <option value="tuesday">Salı</option>
+                        <option value="wednesday">Çarşamba</option>
+                        <option value="thursday">Perşembe</option>
+                        <option value="friday">Cuma</option>
+                        <option value="saturday">Cumartesi</option>
+                        <option value="sunday">Pazar</option>
+                    </select>
+                    <span asp-validation-for="CalisilmayanGun" class="text-danger"></span>
+                </div>
+
+                <!-- Verilen Hizmetler -->
+                <div class="form-group">
+                    <label asp-for="VerilenHizmetler" class="control-label">Berberin Verebileceği Hizmetler</label>
+                    <select asp-for="VerilenHizmetler" class="form-control">
+                        <option value="">Hizmet seçiniz</option>
+                        <option value="Saç">Saç</option>
+                        <option value="Sakal">Sakal</option>
+                        <option value="Bakım">Bakım</option>
+                        <option value="Saç,Sakal">Saç ve Sakal</option>
+                        <option value="Saç,Bakım">Saç ve Bakım</option>
+                        <option value="Sakal,Bakım">Sakal ve Bakım</option>
+                        <option value="Saç,Sakal,Bakım">Saç, Sakal ve Bakım</option>
+                    </select>
+                    <span asp-validation-for="VerilenHizmetler" class="text-danger"></span>
+                </div>
+
+                <!-- Kaydet Butonu -->
+                <div class="form-group">
+                    <input type="submit" value="Kaydet" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Geri Dönüş Bağlantısı -->
+<div>
+    <a asp-action="BerberGoster" class="btn btn-secondary">Geri</a>
+</div>

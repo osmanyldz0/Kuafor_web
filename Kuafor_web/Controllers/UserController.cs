@@ -10,4 +10,3 @@ namespace berber4.Controllers
         }
     }
 }
- 

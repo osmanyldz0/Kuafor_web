@@ -1,0 +1,183 @@
+﻿@model IEnumerable<Kuafor_web.Models.Berber>
+
+@{
+    ViewData["Title"] = "Berberler";
+
+    Layout = "~/Views/Shared/_yönetimtema.cshtml";
+}
+<!-- Sayfa Arka Plan ve Tablonun Şekillendirilmesi -->
+<style>
+    /* Sayfa arka planı */
+    body {
+        background-color: #121212 !important; /* Siyah arka plan */
+        color: #ffffff; /* Beyaz genel metin */
+        font-family: Arial, sans-serif;
+    }
+
+    /* Tablo ayarları */
+    table {
+        width: 100%;
+        margin: 20px auto;
+        background-color: #1e1e1e; /* Koyu gri tablo arka planı */
+        border-collapse: collapse;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Gölge efekti */
+    }
+
+        /* Tablo başlıkları */
+        table th {
+            background-color: #FF6600 !important; /* Turuncu başlık arka planı important öncelik sağlar important koymadan çizgi turuncu olmadı */
+            color: #121212; /* Siyah yazı rengi */
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Tablo satırları */
+        table td {
+            color: #FFFFFF; /* Beyaz metin */
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #444; /* İnce gri kenarlık */
+        }
+
+        /* Linkler */
+        table a {
+            color: #FF6600; /* Turuncu link */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            table a:hover {
+                color: #e65c00; /* Daha koyu turuncu hover efekti */
+                text-decoration: underline;
+            }
+
+        /* Tablo satırlarının hover efekti */
+        table tr:hover {
+            background-color: #333333; /* Koyu gri hover efekti */
+        }
+</style>
+
+<h1>Berberler</h1>
+
+<p>
+    <a asp-action="BerberEkle">Yeni Berber Ekle</a>
+</p>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BerberIsim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BerberId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aktif)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsBaslangicTarihi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsBaslangicSaati)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsBitisSaati)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Berberkazanc)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CalisilmayanGun)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalonAd)
+            </th>
+            <th>
+                İzin Günü
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BerberIsim)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BerberId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Aktif)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsBaslangicTarihi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsBaslangicSaati)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsBitisSaati)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Berberkazanc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CalisilmayanGun)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalonAd)
+                </td>
+                <td>
+                    <p id="izinGunu-@item.BerberId"></p>
+
+                    <script>
+                        // İzin günü bilgisini almak için API çağrısı
+                        async function fetchIzinGunu(berberId) {
+                            try {
+                                const response = await fetch(`/api/Api/GetIzinGunuByBerber/${berberId}`);
+
+                                if (!response.ok) {
+                                    throw new Error(`API hatası: ${response.status}`);
+                                }
+
+                                const data = await response.json();
+                                console.log(data);  // Veriyi konsola yazdırıyoruz
+
+                                const izinGunuElement = document.getElementById(`izinGunu-${berberId}`);
+                                if ( data.IzinGunu) {
+                                    izinGunuElement.innerHTML = data.IzinGunu;
+                                } else {
+                                    izinGunuElement.innerHTML = "Veri yok";  // Eğer data veya IzinGunu yoksa, bu mesajı yazdırıyoruz
+                                }
+                            } catch (error) {
+                                console.error("API'den veri alınırken hata oluştu:", error);
+
+                                // Hata durumunda kullanıcıya mesaj göster
+                                const izinGunuElement = document.getElementById(`izinGunu-${berberId}`);
+                                izinGunuElement.innerHTML = "İzin günü bilgisi alınamadı.";  // Hata mesajı
+                            }
+                        }
+
+
+                        // İzin günü bilgisini al
+                        fetchIzinGunu(@item.BerberId);  // Modelden gelen BerberId'yi kullan
+                    </script>
+                </td>
+
+                <td>
+                    <a asp-action="BerberGetir" asp-route-id="@item.BerberId">Düzenle</a> |
+                    <a asp-action="Details" asp-route-id="@item.BerberId">Details</a> |
+                    <a asp-action="BerberSil" asp-route-id="@item.BerberId" onclick="return confirm('Berber silinsin mi?')">Kullanıcı Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

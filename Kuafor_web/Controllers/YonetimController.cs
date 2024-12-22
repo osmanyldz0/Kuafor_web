@@ -1,4 +1,4 @@
-﻿using Kuafor_web.Models;
+﻿ 
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using System.Security.Cryptography;
@@ -167,13 +167,17 @@ namespace berber4.Controllers
 
         {
 
-
+            if (!ModelState.IsValid)
+            {
+                // Model geçerli değilse hataları göster
+                return View(ber);
+            }
             var berber = db.Berbers.Where(s => s.Pasif == false && s.BerberId == ber.BerberId).FirstOrDefault();
 
 
 
 
-            berber.BerberKazanc = ber.BerberKazanc;
+            berber.Berberkazanc = ber.Berberkazanc;
             berber.Aktif = ber.Aktif;
             //   berber.SalonAd = ber.SalonAd;
             berber.SalonId = ber.SalonId;
@@ -227,7 +231,11 @@ namespace berber4.Controllers
         public IActionResult SalonEkle(Salon s) //httpget
 
         {
-
+            if (!ModelState.IsValid)
+            {
+                // Model geçerli değilse hataları göster
+                return View(s);
+            }
 
             db.Salons.Add(s);
 
@@ -252,6 +260,13 @@ namespace berber4.Controllers
         public IActionResult BerberEkle(Berber b) //httpget
 
         {
+            if (!ModelState.IsValid)
+            {
+                // Model geçerli değilse hataları göster
+                return View(b);
+            }
+            // Model geçerli ise işlem yapılır
+         
             if (ModelState.IsValid)
             {
                 // Veritabanından SalonId'ye göre SalonAd'ı bul
@@ -262,9 +277,9 @@ namespace berber4.Controllers
                 }
 
             }
-            b.BerberKazanc = 0;
+            b.Berberkazanc = 0;
             b.Pasif = false;
-
+            
             db.Berbers.Add(b);
 
             db.SaveChanges();
@@ -284,6 +299,11 @@ namespace berber4.Controllers
         public IActionResult KullaniciEkle(Kullanici k) //httpget
 
         {
+            if (!ModelState.IsValid)
+            {
+                // Model geçerli değilse hataları göster
+                return View(k);
+            }
             k.Silindi = false;
             k.Parola = MD5Sifrele(k.Parola.Trim());
             db.Kullanicis.Add(k);
@@ -360,7 +380,7 @@ namespace berber4.Controllers
             {
                 ModelState.AddModelError("", "Kullanıcının randevusu bulunduğundan silinemez");
 
-
+                 
                 return RedirectToAction("Kullanicilar");
             }
 
