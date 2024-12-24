@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Kuafor_web.Models.Randevu>
+
+@{
+    ViewData["Title"] = "RandevuAl";
+    Layout = "~/Views/Shared/_yönetimtema.cshtml";
+}
+
+<h1>RandevuAl</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RandevuTarih)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aktif)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pasif)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Berber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RandevuTarih)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Aktif)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pasif)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Berber.BerberId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RandevuId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RandevuId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RandevuId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,107 @@
+﻿@model IEnumerable<berber4.Models.Kullanici>
+
+@{
+    ViewData["Title"] = "Kullanicilar";
+    Layout = "~/Views/Shared/_yönetimtema.cshtml";
+}
+
+<!-- Sayfa Arka Plan ve Tablonun Şekillendirilmesi -->
+<style>
+    /* Sayfa arka planı */
+    body {
+        background-color: #121212; /* Siyah arka plan */
+        color: #ffffff; /* Beyaz genel metin */
+        font-family: Arial, sans-serif;
+    }
+
+    /* Tablo ayarları */
+    table {
+        width: 100%;
+        margin: 20px auto;
+        background-color: #1e1e1e; /* Koyu gri tablo arka planı */
+        border-collapse: collapse;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Gölge efekti */
+    }
+
+        /* Tablo başlıkları */
+        table th {
+            background-color: #FF6600 !important; /* Turuncu başlık arka planı important öncelik sağlar important koymadan çizgi turuncu olmadı */
+            color: #121212; /* Siyah yazı rengi */
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+        }
+
+        /* Tablo satırları */
+        table td {
+            color: #FFFFFF; /* Beyaz metin */
+            text-align: center;
+            padding: 10px;
+            border: 1px solid #444; /* İnce gri kenarlık */
+        }
+
+        /* Linkler */
+        table a {
+            color: #FF6600; /* Turuncu link */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+            table a:hover {
+                color: #e65c00; /* Daha koyu turuncu hover efekti */
+                text-decoration: underline;
+            }
+
+        /* Tablo satırlarının hover efekti */
+        table tr:hover {
+            background-color: #333333; /* Koyu gri hover efekti */
+        }
+</style>
+<h1>Kullanicilar</h1>
+
+<!-- Uyarı Mesajı -->
+<div class="alert alert-warning" role="alert">
+    Randevusu olan kullanıcılar silinemez!
+</div>
+
+<p>
+    <a asp-action="KullaniciEkle">Yeni Kullanıcı Ekle</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.KullaniciIsim)</th>
+            <th>@Html.DisplayNameFor(model => model.Eposta)</th>
+            <th>@Html.DisplayNameFor(model => model.Telefon)</th>
+            <th>@Html.DisplayNameFor(model => model.Yetki)</th>
+            <th>@Html.DisplayNameFor(model => model.Aktif)</th>
+            <th>@Html.DisplayNameFor(model => model.Silindi)</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.KullaniciIsim)</td>
+                <td>@Html.DisplayFor(modelItem => item.Eposta)</td>
+                <td>@Html.DisplayFor(modelItem => item.Telefon)</td>
+                <td>@Html.DisplayFor(modelItem => item.Yetki)</td>
+                <td>@Html.DisplayFor(modelItem => item.Aktif)</td>
+                <td>@Html.DisplayFor(modelItem => item.Silindi)</td>
+                <td>
+                    <a asp-action="KullaniciGetir" asp-route-id="@item.KullaniciId">Düzenle </a> 
+                     
+                     
+                </td>
+                <td>
+                      
+                    <a asp-action="KullaniciSil" asp-route-id="@item.KullaniciId"
+                       onclick="return confirm('Kullanıcı silinsin mi?')">KullanıcıSil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
