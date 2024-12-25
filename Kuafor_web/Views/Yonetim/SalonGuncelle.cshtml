@@ -1,0 +1,33 @@
+﻿@model Kuafor_web.Models.Salon
+
+@{
+    ViewData["Title"] = "SalonGuncelle";
+    Layout = "~/Views/Shared/_yönetimtema.cshtml";
+}
+
+
+<h4>Salon Güncelle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="KullaniciGuncelle">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="SalonAd" />
+            <div class="form-group">
+                <label asp-for="SalonAd" class="control-label"></label>
+                <input asp-for="SalonAd" class="form-control" />
+                <span asp-validation-for="SalonAd" class="text-danger"></span>
+            </div>
+            
+
+            <div class="form-group">
+                <input type="submit" value="Kaydet" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="SalonGoster">Geri</a>
+</div>
+

@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Kuafor_web.Models.Salon>
+
+@{
+    ViewData["Title"] = "Salonlar";
+
+    Layout = "~/Views/Shared/_yönetimtema.cshtml";
+
+}
+
+<h1>Salonlar</h1>
+
+<p>
+    <a asp-action="SalonEkle">yeni Salon ekle</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SalonId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalonAd)
+            </th>
+
+
+
+           
+
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalonId)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SalonAd)
+                </td>
+
+                
+
+                <td>
+                    <a asp-action="SalonGetir" asp-route-id="@item.SalonId">düzenle</a> |
+                    
+                    <a asp-action="SalonSil" asp-route-id="@item.SalonId" onclick="return confirm('Salon silinsin mi ?')">Salon sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

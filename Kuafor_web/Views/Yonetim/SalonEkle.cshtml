@@ -1,0 +1,30 @@
+﻿@model Kuafor_web.Models.Salon
+
+@{
+    ViewData["Title"] = "SalonEkle";
+    Layout = "~/Views/Shared/_yönetimtema.cshtml";
+}
+
+
+
+<h4>Salon Ekle</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="SalonEkle">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SalonAd" class="control-label"></label>
+                <input asp-for="SalonAd" class="form-control" />
+                <span asp-validation-for="SalonAd" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Ekle" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+ 
