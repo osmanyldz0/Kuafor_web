@@ -39,6 +39,8 @@ namespace berber4.Controllers
                 await HttpContext.SignInAsync(kural);
                 if(!string.IsNullOrEmpty(ReturnUrl))
                 {
+                    
+              
                     return Redirect(ReturnUrl);
 
                 }
@@ -64,12 +66,14 @@ namespace berber4.Controllers
 
 
 
-                   // return Redirect(ReturnUrl);
+                   
                 }
 
             }
+            ViewData["ErrorMessage"] = "Kayıtlı kullanıcı bulunamadı bilgilerinizi kontrol ediniz !!!";
+           return View();
             
-            return View();
+
         }
 
         public static string MD5Sifrele(string sifrelenecekMetin)

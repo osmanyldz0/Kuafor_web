@@ -72,17 +72,12 @@
                                 }
                                 else
                                 {
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            @item.Baslık
+                                    <li class="nav-item">
+                                        <a class="nav-link" asp-action="Subeler" asp-controller="Home">
+                                            Şubeler
                                         </a>
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                            @foreach (var item2 in salonlar)
-                                            {
-                                                <li><a class="dropdown-item" href="/Home/Subeler">@item2.SalonAd </a></li>
-                                            }
-                                        </ul>
                                     </li>
+
                                 }
                             }
                         }
@@ -116,15 +111,19 @@
                             catch//kulanıcı girisi yapılmamıs
                             {
                                 <li class="nav-item dropdown order-1">
+
                                     <button type="button" id="dropdownMenu1" data-bs-toggle="dropdown" class="btn btn-outline-secondary dropdown-toggle">Giriş <span class="caret"></span></button>
+
                                     <ul class="dropdown-menu dropdown-menu-end mt-1">
+
                                         <li class="p-3">
                                             <form class="form" role="form" method="post" action="Giris/GirisYap">
+
                                                 <div class="form-group">
-                                                    <input id="Eposta" placeholder="E-posta" name="Eposta" class="form-control form-control-sm" type="E-posta" />
+                                                    <input id="Eposta" placeholder="E-posta" name="Eposta" class="form-control form-control-sm" type="E-posta" required  />
                                                 </div>
                                                 <div class="form-group">
-                                                    <input id="Parola" placeholder="Parola" name="Parola" class="form-control form-control-sm" type="password" />
+                                                    <input id="Parola" placeholder="Parola" name="Parola" class="form-control form-control-sm" type="password" required />
                                                 </div>
                                                 <div class="form-group">
                                                     <button type="submit" asp-action="GirisYap" asp-controller="Giris" class="btn btn-primary btn-block">Giriş</button>

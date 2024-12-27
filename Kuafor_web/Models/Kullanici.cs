@@ -6,14 +6,16 @@ namespace Kuafor_web.Models;
 public partial class Kullanici
 {
     public int KullaniciId { get; set; }
+ 
+    [Display(Name = "Ad-soyad")]
 
     [Required(ErrorMessage = "Kullanıcı adı zorunludur.")]
-    [Display(Name = "Ad-soyad")]
     public string KullaniciIsim { get; set; } = null!;
 
 
-    [Required(ErrorMessage = "E-posta zorunludur.")]
+     
     [Display(Name = "E-posta")]
+    [Required(ErrorMessage = "E-posta zorunludur.")]
     public string Eposta { get; set; } = null!;
 
     [Required(ErrorMessage = "Telefon zorunludur.")]

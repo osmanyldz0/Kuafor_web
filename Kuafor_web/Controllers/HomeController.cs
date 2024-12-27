@@ -168,9 +168,13 @@ namespace berber4.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Kaydol(Kullanici k) //httpget
+        public IActionResult Kaydol(Kullanici k)  
 
         {
+            if (!ModelState.IsValid) // Model doðrulama baþarýsýzsa
+            {
+                return View();  
+            }
             k.Silindi = false;
             k.Aktif = true;
             k.Yetki = false;
@@ -193,7 +197,7 @@ namespace berber4.Controllers
 
         public IActionResult Subeler()
         {
-
+ 
 
             return View();
         }

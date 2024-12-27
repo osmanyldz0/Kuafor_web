@@ -1,0 +1,160 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Giriş Yap</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+        /* Sayfa Arka Planı Koyu */
+        html, body {
+            height: 100%;
+            margin: 0;
+            background-color: #121212; /* Koyu arka plan */
+            color: #ffffff; /* Beyaz yazı rengi */
+        }
+
+        /* Form alanını ortalayacak wrapper */
+        .wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        /* Form yapısının stili */
+        #formContent {
+            border-radius: 10px;
+            background: #333333; /* Koyu gri arka plan */
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        /* Input alanları */
+        input[type=text], input[type=password] {
+            background-color: #444444; /* Koyu gri */
+            border: none;
+            color: #ffffff; /* Beyaz metin rengi */
+            padding: 15px 32px;
+            text-align: center;
+            font-size: 16px;
+            margin: 10px 0;
+            width: 85%;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+
+            input[type=text]:focus, input[type=password]:focus {
+                background-color: #555555; /* Daha koyu gri */
+                border-bottom: 2px solid #56baed;
+            }
+
+        input[type=submit] {
+            background-color: #e65100; /* Koyu turuncu */
+            color: white;
+            padding: 15px 80px;
+            text-align: center;
+            border: none;
+            text-transform: uppercase;
+            font-size: 13px;
+            border-radius: 5px;
+            margin: 10px 0;
+            transition: all 0.3s ease-in-out;
+        }
+
+            input[type=submit]:hover {
+                background-color: #ff5722; /* Hover durumu için daha parlak turuncu */
+            }
+
+        /* Footer alanı */
+        #formFooter {
+            background-color: #444444;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .underlineHover:after {
+            display: block;
+            left: 0;
+            bottom: -10px;
+            width: 0;
+            height: 2px;
+            background-color: #e65100; /* Koyu turuncu */
+            content: "";
+            transition: width 0.2s;
+        }
+
+        .underlineHover:hover {
+            color: #ffffff;
+        }
+
+            .underlineHover:hover:after {
+                width: 100%;
+            }
+
+        /* Animasyon */
+        .fadeIn {
+            opacity: 0;
+            animation: fadeIn ease-in 1;
+            animation-duration: 1s;
+            animation-fill-mode: forwards;
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        *:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        
+
+        <div id="formContent">
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="~/images/usericon.png" id="icon" alt="User Icon" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" />
+
+
+            </div>
+
+            <!-- Login Form -->
+            <form method="post">
+                <input type="text" id="Eposta" class="fadeIn second" name="Eposta" placeholder="E-posta" required>
+                <input type="password" id="Parola" class="fadeIn third" name="Parola" placeholder="Parola" required>
+                <input type="submit" class="fadeIn fourth" value="Giriş">
+                <br />
+                <a asp-controller="Home" asp-action="Kaydol" class="btn btn-outline-secondary">Kayıt Ol</a>
+
+            </form>
+
+            @if (ViewData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewData["ErrorMessage"]
+                </div>
+            }
+        </div>
+       
+
+    </div>
+  
+</body>
+</html>
