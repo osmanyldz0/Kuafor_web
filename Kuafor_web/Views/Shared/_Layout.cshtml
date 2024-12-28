@@ -89,10 +89,12 @@
                             @using System.Security.Claims;
 
 
-                            try
+
+                            int kulId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                            var kullanici = db.Kullanicis.Where(k => k.KullaniciId == kulId).FirstOrDefault();
+                            if (kullanici != null)
                             {
-                                int kulId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
-                                var kullanici = db.Kullanicis.Where(k => k.KullaniciId == kulId).FirstOrDefault();
+
                                 string kulAdi = kullanici.KullaniciIsim;
                                 <li>
                                     <div class="form-group">
@@ -106,24 +108,24 @@
 
                                 </li>
 
+
+
                             }
 
-                            catch//kulanıcı girisi yapılmamıs
+                            ///////////////////////////
+
+                            else//kulanıcı girisi yapılmamıs
                             {
                                 <li class="nav-item dropdown order-1">
-
                                     <button type="button" id="dropdownMenu1" data-bs-toggle="dropdown" class="btn btn-outline-secondary dropdown-toggle">Giriş <span class="caret"></span></button>
-
                                     <ul class="dropdown-menu dropdown-menu-end mt-1">
-
                                         <li class="p-3">
                                             <form class="form" role="form" method="post" action="Giris/GirisYap">
-
                                                 <div class="form-group">
-                                                    <input id="Eposta" placeholder="E-posta" name="Eposta" class="form-control form-control-sm" type="E-posta" required  />
+                                                    <input id="Eposta" placeholder="E-posta" name="Eposta" class="form-control form-control-sm" type="E-posta" />
                                                 </div>
                                                 <div class="form-group">
-                                                    <input id="Parola" placeholder="Parola" name="Parola" class="form-control form-control-sm" type="password" required />
+                                                    <input id="Parola" placeholder="Parola" name="Parola" class="form-control form-control-sm" type="password" />
                                                 </div>
                                                 <div class="form-group">
                                                     <button type="submit" asp-action="GirisYap" asp-controller="Giris" class="btn btn-primary btn-block">Giriş</button>
