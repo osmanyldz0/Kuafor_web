@@ -27,9 +27,9 @@ public partial class Randevu
     public string? BerberAd { get; set; }
     [Display(Name = "Randevu tarihi")]
     public DateOnly RandevuTarih { get; set; }
-
+    [Display(Name = "Randevu Bitiş")]
     public TimeOnly RandevuBitis { get; set; }
-
+    [Display(Name = "Hizmet Süresi")]
     public TimeOnly HizmetSuresi { get; set; }
     public int? Ucret { get; set; }
     public virtual Berber? Berber { get; set; }

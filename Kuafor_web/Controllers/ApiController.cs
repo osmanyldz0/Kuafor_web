@@ -34,7 +34,7 @@ namespace berber4.Controllers
             var result = new Api
             {
                 BerberId = b.BerberId,
-                IzinGunu = b.CalisilmayanGun // Burada izin günü, bugünün tarihi olarak dönecek
+                IzinGunu = b.CalisilmayanGun  
             };
 
             return Ok(result);

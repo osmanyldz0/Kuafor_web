@@ -102,15 +102,7 @@ namespace berber4.Controllers
 
 
 
-
-
-        ///////
-
-
-
-
-
-
+         
 
 
 
@@ -156,7 +148,7 @@ namespace berber4.Controllers
 
 
 
-            //////////////////////
+             
             salon.SalonId = sal.SalonId;
             salon.SalonAd = sal.SalonAd;
 
@@ -233,7 +225,7 @@ namespace berber4.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SalonEkle(Salon s) //httpget
+        public IActionResult SalonEkle(Salon s)  
 
         {
             if (!ModelState.IsValid)
@@ -249,7 +241,7 @@ namespace berber4.Controllers
 
             return RedirectToAction("SalonGoster");
         }
-        public IActionResult BerberEkle() //httpget
+        public IActionResult BerberEkle() 
 
         {
 
@@ -262,7 +254,7 @@ namespace berber4.Controllers
 
 
         [HttpPost]
-        public IActionResult BerberEkle(Berber b) //httpget
+        public IActionResult BerberEkle(Berber b)  
 
         {
             if (!ModelState.IsValid)
@@ -301,7 +293,7 @@ namespace berber4.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult KullaniciEkle(Kullanici k) //httpget
+        public IActionResult KullaniciEkle(Kullanici k)  
 
         {
             if (!ModelState.IsValid)

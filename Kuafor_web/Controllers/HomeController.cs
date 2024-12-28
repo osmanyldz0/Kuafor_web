@@ -21,23 +21,8 @@ namespace berber4.Controllers
         {
             _logger = logger;
         }
-
-        public IActionResult Index(int id)
-        {
-
-            BerberDbContext db = new BerberDbContext();
-            var sayfa = db.Sayfalars.Where(a => a.Silindi == false && a.Aktif == true && a.SayfaId == id).FirstOrDefault(); //tek kayýt geldiðinden emin olmak için firsor default
-
-            return View(sayfa);
-        }
-        //public IActionResult RandevuCakisiyorMu(Randevu yeniRandevu)
-        //{
-
-        //    var mevcutRandevular=db.Randevus.Where(r =>r.RandevuTarih==yeniRandevu.RandevuTarih && ).Fir
-        //}
-
-     //   private readonly string _apiKey = "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";
-        private static readonly string ApiKey = "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"; // API anahtarýnýzý buraya ekleyin
+ 
+        private static readonly string ApiKey = "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"; // API anahtarý
         private static readonly string ApiEndpoint = "https://api.groq.com/openai/v1/chat/completions"; // API endpoint adresi
 
 
@@ -54,13 +39,13 @@ namespace berber4.Controllers
 
             if (photo != null && photo.Length > 0)
             {
-                // string apiKey = _apiKey; // API anahtarýnýz burada
+                // string apiKey = _apiKey; // API anahtarý 
               
                 string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(photo.FileName);
 
 
 
-                // Fotoðrafý Base64 formatýna çevirin
+                // Fotoðraf için Base64 formatý 
                 string base64Image;
                 using (var memoryStream = new MemoryStream())
                 {
@@ -69,7 +54,7 @@ namespace berber4.Controllers
                     base64Image = Convert.ToBase64String(byteArray);
                 }
 
-                // JSON Mesajý Oluþturma
+                // JSON mesajý oluþturma
                 var messagePayload = new
                 {
                     model = "llama-3.2-11b-vision-preview",
@@ -106,8 +91,8 @@ namespace berber4.Controllers
                         var jsonResponse = JObject.Parse(responseContent);
                         var message = jsonResponse["choices"]?[0]?["message"]?["content"]?.ToString();
 
-                        // Yanýtý ViewBag'e ata
-                        //ViewBag.ResponseMessage = message;
+                        // Yanýtý viewbage ver
+                      
                         ViewBag.EditedImageUrl = message;
                         return View();
                     }
@@ -116,12 +101,12 @@ namespace berber4.Controllers
                     return View();
                 }
 
-                // API'ye istek gönderme
+                // apiye istek
             }
 
             else
             {
-                ViewBag.Error = " fotoðraf yükleyiniz .";
+                ViewBag.Error = " fotoðraf yüklemeniz gerek .";
             }
 
             return View();
@@ -519,7 +504,7 @@ namespace berber4.Controllers
         {
             var berberler = db.Berbers.Where(s => s.Pasif == false).ToList();
 
-            // Debug: Veritabanýndan çekilen veriyi loglayýn
+          
             foreach (var berber in berberler)
             {
                 Console.WriteLine($"Berber Isim: {berber.BerberIsim}, Pasif: {berber.Pasif}");
@@ -578,7 +563,7 @@ namespace berber4.Controllers
 
             db.Randevus.Remove(randevu);
             db.SaveChanges();
-            //Randevu YeniRandevu = new Randevu();
+       
 
             return Redirect("/Home/Randevu");
         }
@@ -645,7 +630,7 @@ namespace berber4.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult KullaniciEkle(Kullanici k) //httpget
+        public IActionResult KullaniciEkle(Kullanici k) 
 
         {
             k.Yetki = false;
@@ -660,7 +645,7 @@ namespace berber4.Controllers
             return Redirect("/Giris/GirisYap");
         }
 
-        public IActionResult KullanicIslemleri(Kullanici k) //httpget
+        public IActionResult KullanicIslemleri(Kullanici k)  
 
         {
             var kullaniciId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
