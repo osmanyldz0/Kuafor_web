@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Bilgilerim";
-    Layout = "~/Views/Shared/User.cshtml";  /* Layout sayfası */
+    Layout = "~/Views/Shared/_yönetimtema.cshtml";  /* Layout sayfası */
 }
 
 <style>
@@ -90,21 +90,21 @@
             <!-- Kullanıcı Adı -->
             <div class="form-group">
                 <label asp-for="KullaniciIsim" class="control-label">Adınız</label>
-                <input asp-for="KullaniciIsim" class="form-control" />
+                <input asp-for="KullaniciIsim" class="form-control" required pattern="\S.*" title="Adınız boşluk karakterlerinden oluşamaz."   />
                 <span asp-validation-for="KullaniciIsim" class="text-danger"></span>
             </div>
 
             <!-- E-posta -->
             <div class="form-group">
                 <label asp-for="Eposta" class="control-label">E-posta</label>
-                <input asp-for="Eposta" class="form-control" />
+                <input asp-for="Eposta" class="form-control" type="email" required />
                 <span asp-validation-for="Eposta" class="text-danger"></span>
             </div>
 
             <!-- Telefon -->
             <div class="form-group">
                 <label asp-for="Telefon" class="control-label">Telefon</label>
-                <input asp-for="Telefon" class="form-control" />
+                <input asp-for="Telefon" class="form-control" type="number" required />
                 <span asp-validation-for="Telefon" class="text-danger"></span>
             </div>
 

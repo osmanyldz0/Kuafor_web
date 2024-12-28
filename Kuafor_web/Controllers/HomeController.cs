@@ -80,7 +80,7 @@ namespace berber4.Controllers
                             role = "user",
                             content = new object[]
                             {
-                                new { type = "text", text = "Can you give me some suggestions about hair style and hair color for the person in this photo? " },
+                                new { type = "text", text = "I'm looking for a new hairstyle. Can you give me a hairstyle suggestion in 50 words?" },
                                 new
                                 {
                                     type = "image_url",

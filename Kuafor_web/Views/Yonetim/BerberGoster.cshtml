@@ -136,7 +136,7 @@
                     @Html.DisplayFor(modelItem => item.SalonAd)
                 </td>
                 <td>
-                    <p id="izinGunu-@item.BerberId"></p>
+                    <div id="izinGunu-container"> <span id="izinGunu-display @item.BerberId"></span></div>
 
                     <script>
                         // İzin günü bilgisini almak için API çağrısı
@@ -149,11 +149,16 @@
                                 }
 
                                 const data = await response.json();
-                                console.log(data);  // Veriyi konsola yazdırıyoruz
+                                //console.log(data);  // Veriyi konsola yazdırıyoruz
 
-                                const izinGunuElement = document.getElementById(`izinGunu-${berberId}`);
-                                if ( data.IzinGunu) {
-                                    izinGunuElement.innerHTML = data.IzinGunu;
+                                const izinGunu = data?.izinGunu;
+                                //console.log(izinGunu)
+                                const izinGunuElement = document.getElementById("izinGunu-display @item.BerberId");
+
+                                //                        const izinGunuElement =
+                                if (izinGunu) {
+                                    izinGunuElement.textContent = izinGunu; // Set the izinGunu value as the text content
+
                                 } else {
                                     izinGunuElement.innerHTML = "Veri yok";  // Eğer data veya IzinGunu yoksa, bu mesajı yazdırıyoruz
                                 }

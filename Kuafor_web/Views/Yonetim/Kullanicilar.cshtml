@@ -63,6 +63,12 @@
 <div class="alert alert-warning" role="alert">
     Randevusu olan kullanıcılar silinemez!
 </div>
+@if (TempData["ErrorMessage"] != null)
+{
+    <div style="color: red; font-weight: bold;">
+        @TempData["ErrorMessage"]
+    </div>
+}
 
 <p>
     <a asp-action="KullaniciEkle">Yeni Kullanıcı Ekle</a>

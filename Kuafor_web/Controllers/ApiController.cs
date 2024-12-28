@@ -17,6 +17,7 @@ namespace berber4.Controllers
         }
 
         // Çalışanın izin gününü ve BerberId'sini döndüren API
+        ///api/Api/GetIzinGunuByBerber/id yaz
         [HttpGet("GetIzinGunuByBerber/{id}")]
         public async Task<ActionResult<Api>> GetIzinGunuByBerber(int id)
         {

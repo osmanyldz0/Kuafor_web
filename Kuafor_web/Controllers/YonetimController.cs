@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Kuafor_web.Models;
+using System.Runtime.ConstrainedExecution;
 
 namespace berber4.Controllers
 {
@@ -46,7 +47,11 @@ namespace berber4.Controllers
 
 
         public IActionResult Bilgilerim()
+
+
+
         {
+ 
             int kulId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             var kullanici = db.Kullanicis.Find(kulId);
             kullanici.Parola = "";
@@ -151,7 +156,7 @@ namespace berber4.Controllers
 
 
 
-
+            //////////////////////
             salon.SalonId = sal.SalonId;
             salon.SalonAd = sal.SalonAd;
 
@@ -378,9 +383,9 @@ namespace berber4.Controllers
             // Eğer randevu varsa, silinemez
             if (randevuKontrol.Any())
             {
-                ModelState.AddModelError("", "Kullanıcının randevusu bulunduğundan silinemez");
+                TempData["ErrorMessage"] = "Kullanıcının randevusu bulunduğundan silinemez";
 
-                 
+
                 return RedirectToAction("Kullanicilar");
             }
 
@@ -452,6 +457,12 @@ namespace berber4.Controllers
 
 
             var bulunanRandevu = db.Randevus.FirstOrDefault(m => m.RandevuId == id);
+
+
+            var berber= db.Berbers.FirstOrDefault(s => s.BerberId == bulunanRandevu.BerberId);
+
+
+            berber.Berberkazanc = berber.Berberkazanc - bulunanRandevu.Ucret;
 
             db.Randevus.Remove(bulunanRandevu);
             db.SaveChanges(); // Değişiklikleri kaydet

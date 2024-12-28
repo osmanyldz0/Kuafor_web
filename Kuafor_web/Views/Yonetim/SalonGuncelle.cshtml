@@ -10,12 +10,12 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="KullaniciGuncelle">
+        <form asp-action="SalonGuncelle">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <input type="hidden" asp-for="SalonAd" />
+            <input type="hidden" asp-for="SalonId" />
             <div class="form-group">
-                <label asp-for="SalonAd" class="control-label"></label>
-                <input asp-for="SalonAd" class="form-control" />
+                <label asp-for="SalonAd" class="control-label" ></label>
+                <input asp-for="SalonAd" class="form-control" required pattern="\S.*" title="Salon adı boşluk karakterlerinden oluşamaz." />
                 <span asp-validation-for="SalonAd" class="text-danger"></span>
             </div>
             

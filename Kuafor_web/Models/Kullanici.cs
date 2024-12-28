@@ -8,6 +8,7 @@ public partial class Kullanici
     public int KullaniciId { get; set; }
  
     [Display(Name = "Ad-soyad")]
+     
 
     [Required(ErrorMessage = "Kullanıcı adı zorunludur.")]
     public string KullaniciIsim { get; set; } = null!;
